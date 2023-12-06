@@ -7,6 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.internal.GsonBuildConfig
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 class ListFragment : Fragment() {
@@ -36,9 +41,17 @@ class ListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         recyclerView.layoutManager = LinearLayoutManager(requireActivity())
 
-        //adapter = DogsAdapter()
+        adapter = DogsAdapter()
         recyclerView.adapter = adapter
 
+    }
+
+    private fun getRetrofit(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl("https://dog.ceo/api")
+            .addConverterFactory(GsonConverterFactory.create())
+
+            .build()
     }
 
 
